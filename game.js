@@ -125,6 +125,7 @@ function create() {
       .setInteractive()
       .setDisplaySize(buttonSize, buttonSize)
       .setAlpha(0.8);
+    btn.setScale(0.6); // Добавляем масштаб 60%
     btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
     btn.on('pointerup', () => resetPlayerDirection.call(this));
   };
