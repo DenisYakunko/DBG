@@ -108,6 +108,7 @@ function create() {
   player = this.physics.add.sprite(config.width / 2, config.height / 2, 'player');
   player.setCollideWorldBounds(true);
   player.body.setSize(50, 50).setOffset(37, 37);
+  player.setScale(0.6); // 60% от оригинального размера
 
   // Мешок для пыли
   const bag = this.add.image(config.width - 100, 50, 'bag').setInteractive();
