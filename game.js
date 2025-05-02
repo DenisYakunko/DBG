@@ -121,14 +121,14 @@ function create() {
  // Виртуальные кнопки
 const buttonSize = 120;
 const padding = 10; // Отступ от краёв экрана
-const buttonVerticalCenter = config.height / 2 + 30; // Вертикальный центр + смещение
+const buttonVerticalCenter = config.height / 2 + 50; // Вертикальный центр + смещение
 
 const createButton = (x, y, texture, direction) => {
   const btn = this.add.image(x, y, texture)
     .setInteractive()
     .setDisplaySize(buttonSize, buttonSize)
     .setAlpha(0.8)
-    .setScale(0.9); // Устанавливаем масштаб 60%
+    .setScale(0.9); // Устанавливаем масштаб 90%
   btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
   btn.on('pointerup', () => resetPlayerDirection.call(this));
 };
