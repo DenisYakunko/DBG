@@ -134,11 +134,11 @@ const createButton = (x, y, texture, direction) => {
 };
 
 // Левая сторона экрана (вверх и вниз)
-createButton(padding, buttonVerticalCenter - 80, 'arrow_up_left', 'up_left');   // Верхняя левая
+createButton(padding, buttonVerticalCenter + 50, 'arrow_up_left', 'up_left');   // Верхняя левая
 createButton(padding, buttonVerticalCenter + 80, 'arrow_down_left', 'down_left'); // Нижняя левая
 
 // Правая сторона экрана (вверх и вниз)
-createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter - 80, 'arrow_up_right', 'up_right');   // Верхняя правая
+createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter + 50, 'arrow_up_right', 'up_right');   // Верхняя правая
 createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter + 80, 'arrow_down_right', 'down_right'); // Нижняя правая
   // Группы объектов
   enemies = this.physics.add.group();
