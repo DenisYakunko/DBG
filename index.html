@@ -1,84 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Основные метатеги -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DustBuster</title>
-
-  <!-- Подключение движка Phaser -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
-
-  <!-- Стили для игры -->
   <style>
-    /* Базовые стили */
-    body { margin: 0; } /* Убираем отступы у страницы */
-    canvas { display: block; } /* Делаем canvas блочным элементом */
-
-    /* Экран загрузки */
+    body { margin: 0; }
+    canvas { display: block; }
     #loadingScreen {
-      position: fixed; /* Фиксируем на весь экран */
+      position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: black url('assets/loading_screen.png') center center no-repeat; /* Фон изображения */
-      background-size: cover; /* Растягиваем фон */
-      z-index: 9999; /* Поверх всего */
-      cursor: pointer; /* Курсор для клика */
+      background: black url('assets/loading_screen.png') center center no-repeat;
+      background-size: cover;
+      z-index: 9999;
+      cursor: pointer;
     }
-
-    /* Экран поражения и победы */
     #gameOverScreen, #winScreen {
-      position: fixed; /* Фиксируем на весь экран */
+      position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      z-index: 9998; /* Ниже экрана загрузки */
-      display: none; /* Скрыты по умолчанию */
-      align-items: center; /* Центрируем по вертикали */
-      justify-content: center; /* Центрируем по горизонтали */
-      background-color: rgba(0,0,0,0.7); /* Полупрозрачный фон */
+      z-index: 9998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,0.7);
     }
-
-    /* Общие стили для экранов */
     .game-over-container, .win-container {
       position: relative;
       width: 600px;
       height: 400px;
-      background-size: contain; /* Изображение внутри */
-      background-position: center; /* Центрируем изображение */
-      background-repeat: no-repeat; /* Не повторяем */
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
     }
-
-    /* Фон для экрана поражения */
     .game-over-container {
       background-image: url('assets/game_over_screen.png');
     }
-
-    /* Фон для экрана победы */
     .win-container {
       background-image: url('assets/win_screen.png');
     }
-
-    /* Стиль для кода купона */
     .coupon-code {
       font-size: 24px;
       color: #fff;
       margin-top: 20px;
       font-family: monospace;
       letter-spacing: 2px;
-      cursor: pointer; /* Курсор для клика */
-      transition: color 0.3s ease; /* Плавная смена цвета */
+      cursor: pointer;
+      transition: color 0.3s ease;
     }
-
-    /* Кнопки */
     .buttons {
       margin-top: 30px;
     }
-
     .button {
       display: inline-block;
       padding: 12px 24px;
@@ -91,12 +70,9 @@
       font-size: 18px;
       transition: 0.3s;
     }
-
     .button:hover {
       background: #e84118;
     }
-
-    /* Отображение счета */
     .score-display {
       font-size: 24px;
       color: #fff;
@@ -105,60 +81,45 @@
   </style>
 </head>
 <body>
-  <!-- Экран загрузки -->
   <div id="loadingScreen"></div>
-
-  <!-- Экран поражения -->
   <div id="gameOverScreen">
-    <div class="game-over-container">  </h1>
-      <div class="score-display" id="finalScore">Счет: 0</div> <!-- Счет игрока -->
+    <div class="game-over-container">
+      <div class="score-display" id="finalScore">Счет: 0</div>
       <div class="buttons">
         <button class="button" onclick="restartGame()">Заново</button>
         <button class="button" onclick="exitGame()">Выйти</button>
       </div>
     </div>
   </div>
-
-  <!-- Экран победы -->
   <div id="winScreen">
     <div class="win-container">
       <h1 style="color: white; font-size: 32px; margin-bottom: 20px;">Поздравляем!</h1>
       <p style="color: white; font-size: 20px;">Вы получили скидочный купон на 50%</p>
-      <div class="coupon-code" id="couponCode" onclick="copyCoupon()">COUPON50OFF</div> <!-- Купон -->
+      <div class="coupon-code" id="couponCode" onclick="copyCoupon()">COUPON50OFF</div>
       <div class="buttons">
         <button class="button" onclick="restartGame()">Новая игра</button>
         <button class="button" onclick="exitGame()">Выйти</button>
       </div>
     </div>
   </div>
-
-  <!-- Подключаем игру -->
   <script src="game.js"></script>
-
-  <!-- Функции для кнопок -->
   <script>
-    // Перезапуск игры
     window.restartGame = function () {
       document.getElementById('gameOverScreen').style.display = 'none';
       document.getElementById('winScreen').style.display = 'none';
       location.reload();
     };
-
-    // Выход из игры
     window.exitGame = function () {
       window.close();
     };
-
-    // Копирование купона в буфер обмена
     window.copyCoupon = function () {
       const code = document.getElementById('couponCode').textContent;
-
       navigator.clipboard.writeText(code)
         .then(() => {
           const couponElement = document.getElementById('couponCode');
-          couponElement.style.color = 'limegreen'; // Зелёный цвет при копировании
+          couponElement.style.color = 'limegreen';
           setTimeout(() => {
-            couponElement.style.color = ''; // Восстанавливаем цвет
+            couponElement.style.color = '';
           }, 1000);
         })
         .catch(err => {
