@@ -120,7 +120,7 @@ function create() {
 
  // Виртуальные кнопки
 const buttonSize = 120;
-const padding = 100; // Отступ от краёв экрана
+const padding = 10; // Отступ от краёв экрана
 const buttonVerticalCenter = config.height / 2 + 10; // Вертикальный центр + смещение
 
 const createButton = (x, y, texture, direction) => {
