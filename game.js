@@ -118,30 +118,28 @@ function create() {
     updateUI.call(this);
   });
 
-  // Виртуальные кнопки
-  const padding = 30; // Отступ от краёв экрана (в пикселях)
-  const buttonSize = 120;
-  const createButton = (x, y, texture, direction) => {
-    const btn = this.add.image(x, y, texture)
-      .setInteractive()
-      .setDisplaySize(buttonSize, buttonSize)
-      .setAlpha(0.8);
-	btn.setScale(0.6); // Добавляем масштаб 60%
-    btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
-    btn.on('pointerup', () => resetPlayerDirection.call(this));
-  };
-  // Верхний левый угол
-createButton(padding, padding, 'arrow_up_left', 'up_left');
+ // Виртуальные кнопки
+const buttonSize = 120;
+const padding = 40; // Отступ от краёв экрана
+const buttonVerticalCenter = config.height / 2 + 50; // Вертикальный центр + смещение
 
-// Верхний правый угол
-createButton(config.width - buttonSize * 0.6 - padding, padding, 'arrow_up_right', 'up_right');
+const createButton = (x, y, texture, direction) => {
+  const btn = this.add.image(x, y, texture)
+    .setInteractive()
+    .setDisplaySize(buttonSize, buttonSize)
+    .setAlpha(0.8)
+    .setScale(0.6); // Устанавливаем масштаб 60%
+  btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
+  btn.on('pointerup', () => resetPlayerDirection.call(this));
+};
 
-// Нижний левый угол
-createButton(padding, config.height - buttonSize * 0.6 - padding, 'arrow_down_left', 'down_left');
+// Левая сторона экрана (вверх и вниз)
+createButton(padding, buttonVerticalCenter - 80, 'arrow_up_left', 'up_left');   // Верхняя левая
+createButton(padding, buttonVerticalCenter + 80, 'arrow_down_left', 'down_left'); // Нижняя левая
 
-// Нижний правый угол
-createButton(config.width - buttonSize * 0.6 - padding, config.height - buttonSize * 0.6 - padding, 'arrow_down_right', 'down_right');
-
+// Правая сторона экрана (вверх и вниз)
+createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter - 80, 'arrow_up_right', 'up_right');   // Верхняя правая
+createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter + 80, 'arrow_down_right', 'down_right'); // Нижняя правая
   // Группы объектов
   enemies = this.physics.add.group();
   hearts = this.physics.add.group();
