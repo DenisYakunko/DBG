@@ -128,7 +128,7 @@ const createButton = (x, y, texture, direction) => {
     .setInteractive()
     .setDisplaySize(buttonSize, buttonSize)
     .setAlpha(0.8)
-    .setScale(0.8); // Устанавливаем масштаб 60%
+    .setScale(0.9); // Устанавливаем масштаб 60%
   btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
   btn.on('pointerup', () => resetPlayerDirection.call(this));
 };
@@ -138,8 +138,9 @@ createButton(padding, buttonVerticalCenter + 50, 'arrow_up_left', 'up_left');   
 createButton(padding, buttonVerticalCenter + 80, 'arrow_down_left', 'down_left'); // Нижняя левая
 
 // Правая сторона экрана (вверх и вниз)
-createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter + 50, 'arrow_up_right', 'up_right');   // Верхняя правая
-createButton(config.width - buttonSize * 0.6 - padding, buttonVerticalCenter + 80, 'arrow_down_right', 'down_right'); // Нижняя правая
+createButton(config.width - buttonSize * 0.9 - padding, buttonVerticalCenter + 50, 'arrow_up_right', 'up_right');   // Верхняя правая
+createButton(config.width - buttonSize * 0.9 - padding, buttonVerticalCenter + 80, 'arrow_down_right', 'down_right'); // Нижняя правая
+  
   // Группы объектов
   enemies = this.physics.add.group();
   hearts = this.physics.add.group();
