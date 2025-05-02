@@ -119,26 +119,20 @@ function create() {
   });
 
 // Виртуальные кнопки
-const buttonSize = 120;
-const padding = 30; // Отступ от краёв экрана
-const buttonHeightScaled = buttonSize * 0.6; // Учтите масштаб кнопок (60%)
-const gap = 10; // Расстояние между кнопками по вертикали
+  const buttonSize = 120;
   const createButton = (x, y, texture, direction) => {
     const btn = this.add.image(x, y, texture)
       .setInteractive()
       .setDisplaySize(buttonSize, buttonSize)
       .setAlpha(0.8);
-    btn.setScale(0.9); // Добавляем масштаб 60%
+    btn.setScale(0.6); // Добавляем масштаб 60%
     btn.on('pointerdown', () => setPlayerDirection.call(this, direction));
     btn.on('pointerup', () => resetPlayerDirection.call(this));
   };
-  // Нижние кнопки (влево-вниз и вправо-вниз)
-createButton(padding, config.height - padding - buttonHeightScaled, 'arrow_down_left', 'down_left');   // Низ-слева
-createButton(config.width - buttonSize * 0.6, config.height - padding - buttonHeightScaled, 'arrow_down_right', 'down_right'); // Низ-справа
-
-// Верхние кнопки (влево-вверх и вправо-вверх), расположены над нижними
-createButton(padding, config.height - padding - buttonHeightScaled * 2 - gap, 'arrow_up_left', 'up_left');   // Верх-слева
-createButton(config.width - buttonSize * 0.6, config.height - padding - buttonHeightScaled * 2 - gap, 'arrow_up_right', 'up_right'); // Верх-справа
+  createButton(buttonSize, config.height - buttonSize * 2, 'arrow_up_left', 'up_left');
+  createButton(config.width - buttonSize, config.height - buttonSize * 2, 'arrow_up_right', 'up_right');
+  createButton(buttonSize, config.height - buttonSize, 'arrow_down_left', 'down_left');
+  createButton(config.width - buttonSize, config.height - buttonSize, 'arrow_down_right', 'down_right');
 
   
   // Группы объектов
