@@ -202,26 +202,59 @@ function update() {
   });
 
   // Проверка столкновений
-  this.physics.overlap(player, enemies, (player, enemy) => {
-    if (currentDirection === enemy.direction) {
-      if (dustBag < 100) {
-        score += 10;
-        dustBag += 10;
-        collectSound.play();
-      }
-    } else {
-      energy -= 10;
-      damageSound.play();
+this.physics.overlap(player, enemies, (player, enemy) => {
+  if (currentDirection === enemy.direction) {
+    if (dustBag < 100) {
+      score += 10;
+      dustBag += 10;
+      collectSound.play();
+      
+      // Добавьте эффекты здесь:
+      player.setScale(0.8); // Увеличение героя
+      player.setTint(0xFFFFFF); // Белое мерцание
+
+      // Возврат к исходному размеру и цвету через 150 мс
+      this.time.delayedCall(150, () => {
+        player.setScale(0.6);
+        player.clearTint();
+      });
     }
-    enemy.destroy();
-    updateUI.call(this);
-    checkGameOver.call(this);
-  });
+  } else {
+    energy -= 10;
+    damageSound.play();
+	
+	    // Добавьте тряску камеры:
+    this.cameras.main.shake(150, 0.01);
+    
+    // Или (альтернатива) мерцание героя:
+    player.setTint(0xff0000);
+    this.time.delayedCall(150, () => player.clearTint());
+	
+  }
+  enemy.destroy();
+  updateUI.call(this);
+  checkGameOver.call(this);
+});
 
   this.physics.overlap(player, hearts, (player, heart) => {
     energy = Math.min(energy + (heart.texture.key === 'heart_small' ? 10 : 50), 100);
     heart.destroy();
     restoreSound.play();
+	
+	  // Зелёное мерцание героя
+  player.setTint(0x00FF00);
+  this.time.delayedCall(200, () => player.clearTint());
+
+  // Анимация исчезновения сердца (увеличение + прозрачность)
+  this.tweens.add({
+    targets: heart,
+    scale: 1.5,
+    alpha: 0,
+    duration: 200,
+    onComplete: () => heart.destroy()
+  });
+
+
     updateUI.call(this);
   });
 
@@ -229,6 +262,13 @@ function update() {
   this.physics.overlap(player, ghosts, (player, ghost) => {
     energy -= 50;
     damageSound.play();
+	  // Эффект тряски камеры (сильнее)
+  this.cameras.main.shake(300, 0.02); // 300 мс, интенсивность 0.02
+
+  // Красное мерцание (дольше и ярче)
+  player.setTint(0xff4757); // Яркий красный
+  this.time.delayedCall(300, () => player.clearTint());
+	
     ghost.destroy();
     updateUI.call(this);
     checkGameOver.call(this);
