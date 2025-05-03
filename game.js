@@ -107,7 +107,7 @@ function create() {
   // Игрок
   player = this.physics.add.sprite(config.width / 2, config.height / 2, 'player');
   player.setCollideWorldBounds(true);
-  player.body.setSize(50, 50).setOffset(37, 37);
+  player.body.setSize(70, 70).setOffset(37, 37);
   player.setScale(0.6); // 60% от оригинального размера
 
   // Мешок для пыли
@@ -345,7 +345,7 @@ function spawnGhost() {
   // Создаем привидение
   const ghost = ghosts.create(startX, startY, 'ghost');
   ghost.setScale(0.5);
-  ghost.body.setSize(40, 40).setOffset(20, 20);
+  ghost.body.setSize(160, 270).setOffset(0, 0);
 
   // Целевая точка — центр экрана
   const centerX = config.width / 2;
