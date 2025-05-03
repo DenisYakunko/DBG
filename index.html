@@ -39,6 +39,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+	  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень: смещение X, Y, размытие, цвет */
+	 
     }
     .game-over-container {
       background-image: url('assets/game_over_screen.png');
@@ -47,13 +49,14 @@
       background-image: url('assets/win_screen.png');
     }
     .coupon-code {
-      font-size: 24px;
+      font-size: 32px;
       color: #fff;
       margin-top: 20px;
       font-family: monospace;
       letter-spacing: 2px;
       cursor: pointer;
       transition: color 0.3s ease;
+	  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень: смещение X, Y, размытие, цвет */
     }
     .buttons {
       margin-top: 30px;
@@ -93,13 +96,16 @@
   </div>
   <div id="winScreen">
     <div class="win-container">
-      <h1 style="color: white; font-size: 32px; margin-bottom: 20px;">Поздравляем!</h1>
-      <p style="color: white; font-size: 20px;">Вы получили скидочный купон на 50%</p>
+     
+      <p style="color: white; font-size: 20px;">ВЫ ПОЛУЧИЛИ СКИДОЧНЫЙ КУПОН НА 50%</p>
+	  
       <div class="coupon-code" id="couponCode" onclick="copyCoupon()">COUPON50OFF</div>
-      <div class="buttons">
+      
+	  <div class="buttons">
         <button class="button" onclick="restartGame()">Новая игра</button>
         <button class="button" onclick="exitGame()">Выйти</button>
       </div>
+
     </div>
   </div>
   <script src="game.js"></script>
