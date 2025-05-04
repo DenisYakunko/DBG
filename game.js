@@ -111,12 +111,22 @@ function create() {
   player.setScale(0.6); // 60% от оригинального размера
 
   // Мешок для пыли
-  const bag = this.add.image(config.width - 100, 50, 'bag').setInteractive();
-  bag.on('pointerdown', () => {
-    dustBag = 0;
-    clearBagSound.play();
-    updateUI.call(this);
-  });
+this.bag = this.add.image(config.width - 100, 50, 'bag').setInteractive();
+this.isBagFull = false;
+this.bagPulseTween = null;
+
+this.bag.on('pointerdown', () => {
+  dustBag = 0;
+  clearBagSound.play();
+  updateUI.call(this);
+
+  // Остановка анимации при клике
+  if (this.bagPulseTween) {
+    this.bagPulseTween.stop();
+    this.bag.clearTint();
+    this.isBagFull = false;
+  }
+});
 
 // Виртуальные кнопки
   const buttonSize = 120;
@@ -273,6 +283,28 @@ this.physics.overlap(player, enemies, (player, enemy) => {
     updateUI.call(this);
     checkGameOver.call(this);
   });
+  
+  // Анимация мешка при 100%
+if (dustBag >= 100 && !this.isBagFull) {
+  this.bag.setTint(0xff0000); // Красное мерцание
+  this.bagPulseTween = this.tweens.add({
+    targets: this.bag,
+    scale: { from: 1, to: 1.2 },
+    duration: 300,
+    yoyo: true,
+    repeat: -1, // Бесконечно
+    ease: 'Sine.InOut'
+  });
+  this.isBagFull = true;
+} else if (dustBag < 100 && this.isBagFull) {
+  // Остановка анимации при опустошении
+  if (this.bagPulseTween) {
+    this.bagPulseTween.stop();
+    this.bag.clearTint();
+    this.isBagFull = false;
+  }
+  
+}
 }
 
 // Управление направлением
