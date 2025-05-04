@@ -90,9 +90,11 @@ function create() {
   
   // Уровни сложности
 this.difficultyLevels = [
-  { threshold: 50, enemySpeed: 180, ghostDelay: 15000, ghostSpeed: 200 },
-  { threshold: 100, enemySpeed: 210, ghostDelay: 10000, ghostSpeed: 250 },
-  { threshold: 150, enemySpeed: 240, ghostDelay: 7000, ghostSpeed: 300 }
+  { threshold: 100, enemySpeed: 180, ghostDelay: 15000, ghostSpeed: 200 },
+  { threshold: 200, enemySpeed: 200, ghostDelay: 10000, ghostSpeed: 250 },
+  { threshold: 300, enemySpeed: 220, ghostDelay: 7000, ghostSpeed: 300 },
+  { threshold: 400, enemySpeed: 240, ghostDelay: 6000, ghostSpeed: 350 },
+  { threshold: 450, enemySpeed: 260, ghostDelay: 5000, ghostSpeed: 350 }
 ];
 this.appliedDifficultyLevels = []; // Отслеживание применённых уровней
 
