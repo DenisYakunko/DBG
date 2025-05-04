@@ -441,12 +441,12 @@ function updateUI() {
 // Проверка завершения игры
 function checkGameOver() {
   if (isGameOver) return;
-  if (energy <= 0 || score >= 200) {
+  if (energy <= 0 || score >= 500) {
     isGameOver = true;
     backgroundMusic.stop(); // Останавливаем фоновую музыку
     const finalScoreEl = document.getElementById('finalScore');
     finalScoreEl.textContent = `Счет: ${score}`;
-    if (score >= 200) {
+    if (score >= 500) {
       winSound.play(); // Воспроизвести звук победы
       document.getElementById('winScreen').style.display = 'flex';
     } else {
