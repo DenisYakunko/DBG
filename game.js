@@ -24,8 +24,9 @@ const config = {
 // Константы
 const playerSpeed = 200;
 const spawnDelay = 2000;
-const enemySpeed = 150;
-const GHOST_DELAY = 20000; // Задержка для появления привидения (20 секунд)
+let enemySpeed = 150;
+let ghostSpeed = 150;
+let GHOST_DELAY = 20000; // Задержка для появления привидения (20 секунд)
 const LOADING_SCREEN_DURATION = 5000;
 
 // Переменные
@@ -86,6 +87,14 @@ function create() {
   currentDirection = 'default';
   dustBag = 0;
   score = 0;
+  
+  // Уровни сложности
+this.difficultyLevels = [
+  { threshold: 50, enemySpeed: 180, ghostDelay: 15000, ghostSpeed: 200 },
+  { threshold: 100, enemySpeed: 210, ghostDelay: 10000, ghostSpeed: 250 },
+  { threshold: 150, enemySpeed: 240, ghostDelay: 7000, ghostSpeed: 300 }
+];
+this.appliedDifficultyLevels = []; // Отслеживание применённых уровней
 
   // Скрытие экрана загрузки
   setTimeout(() => {
@@ -163,12 +172,12 @@ this.bag.on('pointerdown', () => {
     callbackScope: this, 
     loop: true 
   });
-  this.time.addEvent({ 
-    delay: GHOST_DELAY, 
-    callback: spawnGhost, 
-    callbackScope: this, 
-    loop: true 
-  });
+  this.ghostTimer = this.time.addEvent({ 
+  delay: GHOST_DELAY, 
+  callback: spawnGhost, 
+  callbackScope: this, 
+  loop: true 
+});
 
   // Текстовые элементы
   this.scoreText = this.add.text(10, 10, 'Score: 0', { fontSize: '24px', fill: '#fff' });
@@ -182,11 +191,36 @@ this.bag.on('pointerdown', () => {
   clearBagSound = this.sound.add('clear_bag');
   gameOverSound = this.sound.add('game_over');
   winSound = this.sound.add('win'); // Инициализация звука победы
+  
+  // Функция повышения сложности
+this.checkDifficultyIncrease = () => {
+  const currentLevel = this.difficultyLevels.find(level => 
+    score >= level.threshold && !this.appliedDifficultyLevels.includes(level.threshold)
+  );
+  if (currentLevel) {
+    enemySpeed = currentLevel.enemySpeed;
+    ghostSpeed = currentLevel.ghostSpeed;
+    this.ghostTimer.remove();
+    this.ghostTimer = this.time.addEvent({
+      delay: currentLevel.ghostDelay,
+      callback: spawnGhost,
+      callbackScope: this,
+      loop: true
+    });
+    this.appliedDifficultyLevels.push(currentLevel.threshold);
+  }
+};
+
 }
 
 // Обновление игры
 function update() {
   if (isGameOver) return;
+  
+  // Повышение сложности
+  if (this.checkDifficultyIncrease) {
+    this.checkDifficultyIncrease();
+  }
 
   // Плавное движение игрока
   switch(currentDirection) {
@@ -387,7 +421,7 @@ function spawnGhost() {
   const angle = Phaser.Math.Angle.Between(startX, startY, centerX, centerY);
 
   // Задаем скорость в направлении центра
-  this.physics.velocityFromRotation(angle, 150, ghost.body.velocity);
+  this.physics.velocityFromRotation(angle, ghostSpeed, ghost.body.velocity);
 
   // Уничтожаем привидение через 6 секунд (время полета через экран)
   this.time.delayedCall(6000, () => {
