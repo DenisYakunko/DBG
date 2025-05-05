@@ -64,8 +64,8 @@ function preload() {
   this.load.image('background1', 'assets/background1.png');
   this.load.image('background2', 'assets/background2.png');
   this.load.image('background3', 'assets/background3.png');
-  this.load.image('background3', 'assets/background4.png');
-  this.load.image('background3', 'assets/background5.png');
+  this.load.image('background4', 'assets/background4.png');
+  this.load.image('background5', 'assets/background5.png');
   this.load.image('bag', 'assets/bag.png');
   this.load.image('arrow_up_left', 'assets/arrow_up_left.png');
   this.load.image('arrow_up_right', 'assets/arrow_up_right.png');
