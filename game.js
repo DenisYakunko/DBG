@@ -92,7 +92,9 @@ function create() {
   
   this.backgroundLevels = [
   { threshold: 100, background: 'background2' },
-  { threshold: 200, background: 'background3' }
+  { threshold: 200, background: 'background3' },
+  { threshold: 300, background: 'background4' },
+  { threshold: 400, background: 'background5' }
 ];
 this.currentBackgroundLevel = 0; // Текущий уровень фона
 this.appliedBackgrounds = []; // Отслеживание применённых фонов
