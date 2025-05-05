@@ -88,6 +88,13 @@ function create() {
   dustBag = 0;
   score = 0;
   
+  this.backgroundLevels = [
+  { threshold: 100, background: 'background2' },
+  { threshold: 200, background: 'background3' }
+];
+this.currentBackgroundLevel = 0; // Текущий уровень фона
+this.appliedBackgrounds = []; // Отслеживание применённых фонов
+  
   // Уровни сложности
 this.difficultyLevels = [
   { threshold: 100, enemySpeed: 180, ghostDelay: 15000, ghostSpeed: 200 },
@@ -213,10 +220,53 @@ this.checkDifficultyIncrease = () => {
   }
 };
 
+// Функция проверки смены фона
+this.checkBackgroundChange = () => {
+  const nextLevel = this.backgroundLevels.find(level => 
+    score >= level.threshold && !this.appliedBackgrounds.includes(level.threshold)
+  );
+  if (nextLevel && nextLevel.threshold > this.currentBackgroundLevel) {
+    changeBackground.call(this, nextLevel.background);
+    this.currentBackgroundLevel = nextLevel.threshold;
+    this.appliedBackgrounds.push(nextLevel.threshold);
+  }
+};
+
+// Функция плавной смены фона
+function changeBackground(newKey) {
+  const newBackground = this.add.image(config.width / 2, config.height / 2, newKey);
+  newBackground.setDisplaySize(config.width, config.height);
+  newBackground.setAlpha(0);
+  newBackground.setDepth(-1); // Критически важно!
+
+  // Плавное исчезновение старого фона
+  this.tweens.add({
+    targets: this.currentBackground,
+    alpha: 0,
+    duration: 500,
+    onComplete: () => {
+      this.currentBackground.destroy();
+      this.currentBackground = newBackground;
+    }
+  });
+
+  // Появление нового фона
+  this.tweens.add({
+    targets: newBackground,
+    alpha: 1,
+    duration: 500
+  });
+}
+
 }
 
 // Обновление игры
 function update() {
+	
+	if (this.checkBackgroundChange) {
+  this.checkBackgroundChange();
+}
+
   if (isGameOver) return;
   
   // Повышение сложности
