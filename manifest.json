@@ -1,7 +1,7 @@
 {
   "name": "DustBuster",
   "short_name": "DustBuster",
-  "start_url": "/",
+  "start_url": "/DBG/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
