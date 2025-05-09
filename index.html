@@ -84,10 +84,37 @@
       color: #fff;
       margin-top: 10px;
     }
+	
+	.loading-screen {
+		position: fixed;
+		top: 0; left: 0;
+		width: 100vw; height: 100vh;
+		background-size: cover;
+		background-position: center;
+		z-index: 9999;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		font-size: 24px;
+		cursor: pointer;
+}
+
+	#loadingScreen {
+		background-image: url('assets/loading_screen1.png');
+		background-color: black;
+}
+
+	#loadingRulesScreen {
+		background-image: url('assets/loading_screen2.png');
+		background-color: black;
+}
+
   </style>
 </head>
 <body>
-  <div id="loadingScreen"></div>
+  <div id="loadingScreen" class="loading-screen" style="background-image: url('assets/loading_screen1.png'); display: flex;"></div>
+  <div id="loadingRulesScreen" class="loading-screen" style="background-image: url('assets/loading_screen2.png'); display: none;"></div>
   <div id="gameOverScreen">
     <div class="game-over-container">
       <div class="score-display" id="finalScore">Счет: 0</div>
@@ -135,6 +162,31 @@
           console.error('Ошибка копирования: ', err);
         });
     };
+	
+	// Показываем первый экран
+  document.getElementById('loadingScreen').style.display = 'flex';
+  
+  // Через 3 секунды показываем второй экран
+  setTimeout(() => {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('loadingRulesScreen').style.display = 'flex';
+  }, 3000);
+  
+  // Через 6 секунд скрываем оба экрана
+  setTimeout(() => {
+    document.getElementById('loadingRulesScreen').style.display = 'none';
+  }, 6000);
+
+  // Возможность пропустить через клик
+  document.getElementById('loadingScreen').addEventListener('click', () => {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('loadingRulesScreen').style.display = 'flex';
+  });
+
+  document.getElementById('loadingRulesScreen').addEventListener('click', () => {
+    document.getElementById('loadingRulesScreen').style.display = 'none';
+  });
+  
   </script>
 </body>
 </html>
