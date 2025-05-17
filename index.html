@@ -1,192 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <link rel="manifest" href="manifest.json">
-	
-  <title>DustBuster</title>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Меню DustBuster</title>
   <style>
-    body { margin: 0; }
-    canvas { display: block; }
-    #loadingScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: black url('assets/loading_screen.png') center center no-repeat;
-      background-size: cover;
-      z-index: 9999;
-      cursor: pointer;
-    }
-    #gameOverScreen, #winScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 9998;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0,0,0,0.7);
-    }
-    .game-over-container, .win-container {
-      position: relative;
-      width: 1080px;
-      height: 1920px;
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
+    body {
+      margin: 0;
+      background: black;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-	  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень: смещение X, Y, размытие, цвет */
-	 
+      height: 100vh;
+      font-family: Arial, sans-serif;
     }
-    .game-over-container {
-      background-image: url('assets/game_over_screen.png');
-    }
-    .win-container {
-      background-image: url('assets/win_screen.png');
-    }
-    .coupon-code {
-      font-size: 32px;
-      color: #fff;
-      margin-top: 20px;
-      font-family: monospace;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: color 0.3s ease;
-	  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень: смещение X, Y, размытие, цвет */
-    }
-    .buttons {
-      margin-top: 30px;
-    }
-    .button {
-      display: inline-block;
-      padding: 12px 24px;
-      margin: 0 10px;
+    .menu-button {
+      width: 240px;
+      padding: 20px;
+      margin: 20px;
       background: #ff4757;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
+      font-size: 20px;
       cursor: pointer;
-      font-size: 18px;
       transition: 0.3s;
     }
-    .button:hover {
+    .menu-button:hover {
       background: #e84118;
     }
-    .score-display {
-      font-size: 24px;
-      color: #fff;
-      margin-top: 10px;
-    }
-	
-	.loading-screen {
-		position: fixed;
-		top: 0; left: 0;
-		width: 100vw; height: 100vh;
-		background-size: cover;
-		background-position: center;
-		z-index: 9999;
-		display: none;
-		justify-content: center;
-		align-items: center;
-		color: white;
-		font-size: 24px;
-		cursor: pointer;
-}
-
-	#loadingScreen {
-		background-image: url('assets/loading_screen1.png');
-		background-color: black;
-}
-
-	#loadingRulesScreen {
-		background-image: url('assets/loading_screen2.png');
-		background-color: black;
-}
-
   </style>
 </head>
 <body>
-  <div id="loadingScreen" class="loading-screen" style="background-image: url('assets/loading_screen1.png'); display: flex;"></div>
-  <div id="loadingRulesScreen" class="loading-screen" style="background-image: url('assets/loading_screen2.png'); display: none;"></div>
-  <div id="gameOverScreen">
-    <div class="game-over-container">
-      <div class="score-display" id="finalScore">Счет: 0</div>
-      <div class="buttons">
-        <button class="button" onclick="restartGame()">Заново</button>
-        <button class="button" onclick="exitGame()">Выйти</button>
-      </div>
-    </div>
-  </div>
-  <div id="winScreen">
-    <div class="win-container">
-     
+  <button class="menu-button" onclick="startGame()">Игра</button>
+  <button class="menu-button" onclick="showRules()">Правила</button>
+  <button class="menu-button" onclick="goToSite()">На сайт</button>
 
-	  
-      <div class="coupon-code" id="couponCode" onclick="copyCoupon()">COUPON50OFF</div>
-      
-	  <div class="buttons">
-        <button class="button" onclick="restartGame()">Новая игра</button>
-        <button class="button" onclick="exitGame()">Выйти</button>
-      </div>
-
-    </div>
-  </div>
-  <script src="game.js"></script>
   <script>
-    window.restartGame = function () {
-      document.getElementById('gameOverScreen').style.display = 'none';
-      document.getElementById('winScreen').style.display = 'none';
-      location.reload();
-    };
-    window.exitGame = function () {
-      window.close();
-    };
-    window.copyCoupon = function () {
-      const code = document.getElementById('couponCode').textContent;
-      navigator.clipboard.writeText(code)
-        .then(() => {
-          const couponElement = document.getElementById('couponCode');
-          couponElement.style.color = 'limegreen';
-          setTimeout(() => {
-            couponElement.style.color = '';
-          }, 1000);
-        })
-        .catch(err => {
-          console.error('Ошибка копирования: ', err);
-        });
-    };
-	
-	// Показываем первый экран
-  document.getElementById('loadingScreen').style.display = 'flex';
-  
-  // Через 2 секунды показываем второй экран
-  setTimeout(() => {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('loadingRulesScreen').style.display = 'flex';
-  }, 2000);
-  
-  // Через 6 секунд скрываем оба экрана
-  setTimeout(() => {
-    document.getElementById('loadingRulesScreen').style.display = 'none';
-  }, 6000);
+    function startGame() {
+      window.location.href = 'dustbustergame.html';
+    }
 
-  // Возможность пропустить через клик
-  document.getElementById('loadingScreen').addEventListener('click', () => {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('loadingRulesScreen').style.display = 'flex';
-  });
+    function showRules() {
+      window.location.href = 'pravila.html';
+    }
 
-  document.getElementById('loadingRulesScreen').addEventListener('click', () => {
-    document.getElementById('loadingRulesScreen').style.display = 'none';
-  });
-  
+    function goToSite() {
+      window.location.href = 'site.html';
+    }
   </script>
 </body>
 </html>
