@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DustBuster</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+    #gameOverScreen, #winScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 9998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,0.7);
+    }
+    .game-over-container, .win-container {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .game-over-container {
+      background-image: url('assets/game_over_screen.png');
+    }
+    .win-container {
+      background-image: url('assets/win_screen.png');
+    }
+    .coupon-code {
+      font-size: 24px;
+      color: #fff;
+      margin-top: 20px;
+      font-family: monospace;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 10px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+    .button:hover {
+      background: #e84118;
+    }
+    .score-display {
+      font-size: 24px;
+      color: #fff;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingScreen"></div>
+  <div id="gameOverScreen">
+    <div class="game-over-container">
+      <div class="score-display" id="finalScore">Счет: 0</div>
+      <div class="buttons">
+        <button class="button" onclick="restartGame()">Заново</button>
+        <button class="button" onclick="exitGame()">Выйти</button>
+      </div>
+    </div>
+  </div>
+  <div id="winScreen">
+    <div class="win-container">
+      <h1 style="color: white; font-size: 32px; margin-bottom: 20px;">Поздравляем!</h1>
+      <p style="color: white; font-size: 20px;">Вы получили скидочный купон на 50%</p>
+      <div class="coupon-code" id="couponCode" onclick="copyCoupon()">COUPON50OFF</div>
+      <div class="buttons">
+        <button class="button" onclick="restartGame()">Новая игра</button>
+        <button class="button" onclick="exitGame()">Выйти</button>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+  <script>
+    // Функции для dustbustergame.html
+    window.restartGame = function () {
+      document.getElementById('gameOverScreen').style.display = 'none';
+      document.getElementById('winScreen').style.display = 'none';
+      location.reload();
+    };
+
+    window.exitGame = function () {
+      window.location.href = 'index.html'; // Возврат в меню
+    };
+
+    window.copyCoupon = function () {
+      const code = document.getElementById('couponCode').textContent;
+      navigator.clipboard.writeText(code)
+        .then(() => {
+          const couponEl = document.getElementById('couponCode');
+          couponEl.style.color = 'limegreen';
+          setTimeout(() => couponEl.style.color = '', 1000);
+        })
+        .catch(err => console.error('Ошибка копирования:', err));
+    };
+
+    // Скрытие экрана загрузки
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loadingScreen').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
