@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сайт в разработке</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    #playerSprite {
+      width: 150px;
+      opacity: 0;
+      transform: scale(1.2);
+      transition: all 0.6s ease-in-out;
+    }
+    .back-button {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="back-button" onclick="backToMenu()">Назад</div>
+  <h1>Сайт в разработке</h1>
+  <img id="playerSprite" src="site/assets/player.png" alt="Игрок">
+  <script>
+    // Анимация появления спрайта
+    window.addEventListener('load', () => {
+      const player = document.getElementById('playerSprite');
+      setTimeout(() => {
+        player.style.opacity = '1';
+        player.style.transform = 'scale(1)';
+      }, 300);
+    });
+
+    function backToMenu() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
