@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Правила игры</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .back-button {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .rules-image {
+      max-width: 90%;
+      max-height: 90vh;
+      border: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+  <div class="back-button" onclick="backToMenu()">Назад</div>
+  <img src="images/rules.jpg" alt="Правила игры" class="rules-image">
+  <script>
+    function backToMenu() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
